@@ -4,11 +4,13 @@ import { useState, useRef, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import WarpBackground from "@/components/WarpBackground";
 import { useMusicReactive } from "@/hooks/useMusicReactive";
+import { useMobile } from "@/hooks/useMobile"; // NEW HOOK
 
 export default function InvitacionAnabellaPablo() {
     const [entrar, setEntrar] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const { initAudio } = useMusicReactive();
+    const isMobile = useMobile(); // DETECT MOBILE
 
     // RSVP STATE
     const [nombre, setNombre] = useState("");
@@ -98,12 +100,12 @@ export default function InvitacionAnabellaPablo() {
             {/* CANVAS 3D FONDO */}
             <div className="absolute inset-0 z-0 text-white">
                 <Canvas
-                    dpr={[1, 1.5]} // Balance perfecto: nítido pero no mata la GPU (retina 2x/3x es overkill)
+                    dpr={isMobile ? 1 : [1, 1.5]} // MOBILE: estricto 1. DESKTOP: hasta 1.5
                     gl={{ antialias: false, powerPreference: "high-performance" }} // AA off gana muchos FPS y el Bloom lo disimula
                     camera={{ position: [0, 0, 50], fov: 75 }}
                     style={{ width: '100%', height: '100%' }}
                 >
-                    <WarpBackground />
+                    <WarpBackground isMobile={isMobile} />
                 </Canvas>
             </div>
 

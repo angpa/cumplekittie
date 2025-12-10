@@ -4,45 +4,43 @@ import { useFrame } from "@react-three/fiber";
 import { useRef, useMemo } from "react";
 import * as THREE from "three";
 import { EffectComposer, Bloom, ChromaticAberration } from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
 
 // ==========================================
-// 1. ESTRELLAS REALISTAS (LUMA STYLE)
+// 1. ESTRELLAS REALISTAS (Dynamic Count)
 // ==========================================
-function WarpStars() {
+function WarpStars({ isMobile }: { isMobile: boolean }) {
     const ref = useRef<THREE.Points>(null);
-    const starCount = 1500; // EQUILIBRIO: Ni vacío (800) ni pesado (6000)
 
-    // Generamos posiciones una vez
+    // DYNAMIC COUNT
+    const starCount = isMobile ? 1200 : 6000;
+
     const { positions, geometry } = useMemo(() => {
         const pos = new Float32Array(starCount * 3);
         for (let i = 0; i < starCount * 3; i += 3) {
-            pos[i] = (Math.random() - 0.5) * 120;     // X más ancho
-            pos[i + 1] = (Math.random() - 0.5) * 120; // Y más alto
-            pos[i + 2] = Math.random() * -150;        // Z profundo
+            pos[i] = (Math.random() - 0.5) * 120;
+            pos[i + 1] = (Math.random() - 0.5) * 120;
+            pos[i + 2] = Math.random() * -150;
         }
         const geo = new THREE.BufferGeometry();
         geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
         return { positions: pos, geometry: geo };
-    }, []);
+    }, [starCount]);
 
-    useFrame(() => {
+    useFrame((state, delta) => {
         if (!ref.current || !ref.current.geometry) return;
 
-        // Rotación sutil del universo
         ref.current.rotation.z += 0.0001;
 
-        // Movimiento "Viaje Espacial"
         const posArray = ref.current.geometry.attributes.position.array as Float32Array;
 
-        for (let i = 0; i < starCount * 3; i += 3) {
-            // Mover estrella hacia la cámara (Z positivo)
-            posArray[i + 2] += 0.2;
+        // SPEED ADJUSTMENT
+        const speed = isMobile ? 0.07 : 0.2;
 
-            // Reset si pasa la cámara
+        for (let i = 0; i < starCount * 3; i += 3) {
+            posArray[i + 2] += speed;
+
             if (posArray[i + 2] > 5) {
                 posArray[i + 2] = -150;
-                // Reset random XY para variedad
                 posArray[i] = (Math.random() - 0.5) * 120;
                 posArray[i + 1] = (Math.random() - 0.5) * 120;
             }
@@ -66,11 +64,12 @@ function WarpStars() {
 }
 
 // ==========================================
-// 2. WARP REACTIVO (PARTÍCULAS GRANDES)
+// 2. WARP REACTIVO (Dynamic Count & Throttle)
 // ==========================================
-function ReactiveWarp() {
-    const count = 500; // Suficiente para el efecto túnel sin saturar
+function ReactiveWarp({ isMobile }: { isMobile: boolean }) {
+    const count = isMobile ? 300 : 1500;
     const mesh = useRef<THREE.InstancedMesh>(null);
+    const totalTime = useRef(0);
 
     const dummy = useMemo(() => new THREE.Object3D(), []);
     const particles = useMemo(() => {
@@ -87,10 +86,17 @@ function ReactiveWarp() {
         return temp;
     }, [count]);
 
-    useFrame((state) => {
+    // Throttling var
+    const lastUpdate = useRef(0);
+
+    useFrame((state, delta) => {
         if (!mesh.current) return;
 
-        // Leer datos globales de audio
+        // AUDIO THROTTLING (Mobile: ~20FPS updates for audio reactivity)
+        lastUpdate.current += delta;
+        if (isMobile && lastUpdate.current < 0.05) return;
+        lastUpdate.current = 0;
+
         const { low, mid, high, total } = (window as any).__musicData || { low: 0, mid: 0, high: 0, total: 0 };
 
         const t = state.clock.getElapsedTime();
@@ -98,30 +104,24 @@ function ReactiveWarp() {
         particles.forEach((particle, i) => {
             let { factor, speed, xFactor, yFactor, zFactor } = particle;
 
-            // Acelerar con bajos
             particle.t += speed / 2 + (low * 0.0001);
             const pt = particle.t;
 
-            // Posición "túnel"
             const a = Math.cos(t) + Math.sin(pt * 1) / 10;
             const b = Math.sin(t) + Math.cos(pt * 2) / 10;
 
             dummy.position.set(
-                (particle.mx / 10) * a + xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 10,
-                (particle.my / 10) * b + yFactor + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
-                (particle.my / 10) * b + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
+                (0) * a + xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 10,
+                (0) * b + yFactor + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
+                (0) * b + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
             );
 
-            // AUDIO REACTIVITY
-            // Pulsos profundos
             dummy.position.z -= (low * 0.1);
             if (dummy.position.z < -100) dummy.position.z = 50;
 
-            // Rotación
             dummy.rotation.z += (mid * 0.00005);
             dummy.rotation.x += (mid * 0.0003);
 
-            // Escala por agudos
             dummy.scale.setScalar(1 + (high * 0.005));
 
             dummy.updateMatrix();
@@ -130,7 +130,6 @@ function ReactiveWarp() {
 
         mesh.current.instanceMatrix.needsUpdate = true;
 
-        // Cambio color material BASE (Violeta a Magenta)
         const material = mesh.current.material as THREE.MeshBasicMaterial;
         const hue = 0.75 + (high * 0.0002);
         const light = 0.5 + (high * 0.001);
@@ -146,27 +145,30 @@ function ReactiveWarp() {
 }
 
 // ==========================================
-// 3. COMPONENTE PRINCIPAL
+// 3. COMPONENTE PRINCIPAL (Props)
 // ==========================================
-export default function WarpBackground() {
+export default function WarpBackground({ isMobile }: { isMobile?: boolean }) {
+    // Safe fallback
+    const mobile = isMobile ?? false;
+
     return (
         <>
             <color attach="background" args={['#030008']} />
 
-            {/* CAPAS DE ESTRELLAS Y PARTÍCULAS */}
-            <WarpStars />
-            <ReactiveWarp />
+            <WarpStars isMobile={mobile} />
+            <ReactiveWarp isMobile={mobile} />
 
-            {/* EFECTOS POSTPROCESSING (LUMA STYLE - RESTORED PREMIUM GLOW) */}
-            <EffectComposer>
-                {/* mipmapBlur es CLAVE para que el glow se vea suave y "caro", no como borde sucio */}
-                <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.2} radius={0.4} />
-                <ChromaticAberration
-                    offset={new THREE.Vector2(0.002, 0.002)}
-                    radialModulation={false}
-                    modulationOffset={0}
-                />
-            </EffectComposer>
+            {/* CONDITIONAL POST-PROCESSING: Only on Desktop */}
+            {!mobile && (
+                <EffectComposer>
+                    <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.2} radius={0.5} />
+                    <ChromaticAberration
+                        offset={new THREE.Vector2(0.002, 0.002)}
+                        radialModulation={false}
+                        modulationOffset={0}
+                    />
+                </EffectComposer>
+            )}
         </>
     );
 }
