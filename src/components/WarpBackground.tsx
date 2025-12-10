@@ -11,7 +11,7 @@ import { EffectComposer, Bloom, ChromaticAberration } from "@react-three/postpro
 function WarpStars({ isMobile }: { isMobile: boolean }) {
     const ref = useRef<THREE.Points>(null);
 
-    // DYNAMIC COUNT
+    // DYNAMIC COUNT: 1200 for mobile (performant), 6000 for desktop (premium)
     const starCount = isMobile ? 1200 : 6000;
 
     const { positions, geometry } = useMemo(() => {
@@ -33,8 +33,8 @@ function WarpStars({ isMobile }: { isMobile: boolean }) {
 
         const posArray = ref.current.geometry.attributes.position.array as Float32Array;
 
-        // SPEED ADJUSTMENT
-        const speed = isMobile ? 0.07 : 0.2;
+        // SPEED ADJUSTMENT: Slower on mobile to reduce visual chaos/processing
+        const speed = isMobile ? 0.05 : 0.2;
 
         for (let i = 0; i < starCount * 3; i += 3) {
             posArray[i + 2] += speed;
@@ -53,7 +53,7 @@ function WarpStars({ isMobile }: { isMobile: boolean }) {
         <points ref={ref} geometry={geometry}>
             <pointsMaterial
                 color="white"
-                size={0.06}
+                size={isMobile ? 0.09 : 0.06} // Slightly larger on mobile for visibility with lower count
                 transparent
                 opacity={0.9}
                 blending={THREE.AdditiveBlending}
@@ -64,14 +64,16 @@ function WarpStars({ isMobile }: { isMobile: boolean }) {
 }
 
 // ==========================================
-// 2. WARP REACTIVO (Dynamic Count & Throttle)
+// 2. WARP REACTIVO (Audio Logic UNAFFECTED)
 // ==========================================
 function ReactiveWarp({ isMobile }: { isMobile: boolean }) {
+    // Mobile: reduce count significantly to save CPU
     const count = isMobile ? 300 : 1500;
-    const mesh = useRef<THREE.InstancedMesh>(null);
-    const totalTime = useRef(0);
 
+    const mesh = useRef<THREE.InstancedMesh>(null);
     const dummy = useMemo(() => new THREE.Object3D(), []);
+
+    // PARTICLE DATA GENERATION
     const particles = useMemo(() => {
         const temp = [];
         for (let i = 0; i < count; i++) {
@@ -81,32 +83,33 @@ function ReactiveWarp({ isMobile }: { isMobile: boolean }) {
             const xFactor = -50 + Math.random() * 100;
             const yFactor = -50 + Math.random() * 100;
             const zFactor = -50 + Math.random() * 100;
-            temp.push({ t, factor, speed, xFactor, yFactor, zFactor, mx: 0, my: 0 });
+            temp.push({ t, factor, speed, xFactor, yFactor, zFactor });
         }
         return temp;
     }, [count]);
 
-    // Throttling var
+    // Throttling for mobile updates
     const lastUpdate = useRef(0);
 
     useFrame((state, delta) => {
         if (!mesh.current) return;
 
-        // AUDIO THROTTLING (Mobile: ~20FPS updates for audio reactivity)
+        // AUDIO THROTTLING (Mobile: ~30FPS updates for audio reactivity)
         lastUpdate.current += delta;
-        if (isMobile && lastUpdate.current < 0.05) return;
+        if (isMobile && lastUpdate.current < 0.033) return;
         lastUpdate.current = 0;
 
         const { low, mid, high, total } = (window as any).__musicData || { low: 0, mid: 0, high: 0, total: 0 };
-
         const t = state.clock.getElapsedTime();
 
         particles.forEach((particle, i) => {
             let { factor, speed, xFactor, yFactor, zFactor } = particle;
 
+            // Audio Influence on Time (Speed up with bass)
             particle.t += speed / 2 + (low * 0.0001);
             const pt = particle.t;
 
+            // Movement Logic (UNCHANGED)
             const a = Math.cos(t) + Math.sin(pt * 1) / 10;
             const b = Math.sin(t) + Math.cos(pt * 2) / 10;
 
@@ -116,12 +119,15 @@ function ReactiveWarp({ isMobile }: { isMobile: boolean }) {
                 (0) * b + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
             );
 
+            // Z-Axis Pulse (Kick)
             dummy.position.z -= (low * 0.1);
             if (dummy.position.z < -100) dummy.position.z = 50;
 
+            // Rotation (Mids)
             dummy.rotation.z += (mid * 0.00005);
             dummy.rotation.x += (mid * 0.0003);
 
+            // Scalar Scale (Highs)
             dummy.scale.setScalar(1 + (high * 0.005));
 
             dummy.updateMatrix();
@@ -130,6 +136,7 @@ function ReactiveWarp({ isMobile }: { isMobile: boolean }) {
 
         mesh.current.instanceMatrix.needsUpdate = true;
 
+        // Color Reaction (Highs -> Brightness/Hue shift)
         const material = mesh.current.material as THREE.MeshBasicMaterial;
         const hue = 0.75 + (high * 0.0002);
         const light = 0.5 + (high * 0.001);
@@ -148,7 +155,6 @@ function ReactiveWarp({ isMobile }: { isMobile: boolean }) {
 // 3. COMPONENTE PRINCIPAL (Props)
 // ==========================================
 export default function WarpBackground({ isMobile }: { isMobile?: boolean }) {
-    // Safe fallback
     const mobile = isMobile ?? false;
 
     return (
