@@ -63,6 +63,10 @@ export default function InvitacionAnabellaPablo() {
         }
     };
 
+    import { submitRSVP } from "./actions"; // Import Server Action
+
+    // ... inside component ...
+
     const enviarAsistencia = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!nombre.trim()) return;
@@ -70,22 +74,17 @@ export default function InvitacionAnabellaPablo() {
         setLoading(true);
 
         try {
-            await fetch("https://formsubmit.co/ajax/pangarano@gmail.com", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    Nombre: nombre,
-                    _subject: "Confirmación Fiesta Kittie ✨",
-                    _cc: "fanabellaf@gmail.com",
-                    _template: "table",
-                    _captcha: "false"
-                })
-            });
+            // Usamos Server Action
+            const formData = new FormData();
+            formData.append('nombre', nombre);
 
-            setEnviado(true);
+            const result = await submitRSVP(formData);
+
+            if (result.success) {
+                setEnviado(true);
+            } else {
+                alert("Error: " + result.message);
+            }
         } catch (error) {
             console.error("Error al enviar", error);
             alert("Hubo un drama con el envío. ¡Avisanos por WhatsApp!");
