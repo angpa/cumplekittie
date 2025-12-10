@@ -188,7 +188,7 @@ export default function InvitacionAnabellaPablo() {
                         <div className="space-y-6 text-slate-200 font-light leading-relaxed text-lg text-center md:text-left">
                             <p>
                                 <span className="text-fuchsia-300">Bienvenidx a la web donde empieza la fiesta.</span><br />
-                                Retro 70s/80s/90s y Depeche Mode flotando en el aire con buena vibra y 5 michis.
+                                Retro 70s/80s/90s y Depeche Mode flotando en el aire con buena vibra y 5 michis (🐈, 🐈‍⬛, 🐱, 🐈‍⬛, 😺).
                             </p>
                             <p>
                                 Scrolleá, bailá, vení. <br />
