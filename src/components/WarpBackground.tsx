@@ -138,9 +138,17 @@ function ReactiveWarp({ isMobile }: { isMobile: boolean }) {
 
         // Color Reaction (Highs -> Brightness/Hue shift)
         const material = mesh.current.material as THREE.MeshBasicMaterial;
-        const hue = 0.75 + (high * 0.0002);
-        const light = 0.5 + (high * 0.001);
-        material.color.setHSL(hue % 1, 1, Math.min(0.8, light));
+
+        // RHYTHM FLASH (White on strong Kick/Snare)
+        if (low > 130 || mid > 140) {
+            material.color.setStyle("#FFFFFF"); // Flash White
+            material.opacity = 1;
+        } else {
+            const hue = 0.75 + (high * 0.0002);
+            const light = 0.5 + (high * 0.001);
+            material.color.setHSL(hue % 1, 1, Math.min(0.8, light));
+            material.opacity = 0.6 + (total * 0.001); // Breathing opacity
+        }
     });
 
     return (
@@ -161,7 +169,9 @@ export default function WarpBackground({ isMobile }: { isMobile?: boolean }) {
         <>
             <color attach="background" args={['#030008']} />
 
-            <WarpStars isMobile={mobile} />
+            {/* Remove Stars on Mobile for cleaner look per user request */}
+            {!mobile && <WarpStars isMobile={mobile} />}
+
             <ReactiveWarp isMobile={mobile} />
 
             {/* CONDITIONAL POST-PROCESSING: Only on Desktop */}

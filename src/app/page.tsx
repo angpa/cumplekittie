@@ -109,6 +109,9 @@ export default function InvitacionAnabellaPablo() {
                 </Canvas>
             </div>
 
+            {/* CSS STARS LAYER (Always active for texture on Desktop, hidden on Mobile) */}
+            <div className="pointer-events-none absolute inset-0 bg-stars mix-blend-screen opacity-60 hidden md:block" aria-hidden="true" />
+
             {/* REACTIVE GLOW OVERLAY */}
             <div
                 ref={glowRef}
