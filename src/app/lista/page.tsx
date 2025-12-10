@@ -22,7 +22,7 @@ export default async function ListaPage({
         );
     }
 
-    let guests = [];
+    let guests: any[] = [];
     try {
         const { rows } = await sql`SELECT * FROM guests ORDER BY created_at DESC`;
         guests = rows;
