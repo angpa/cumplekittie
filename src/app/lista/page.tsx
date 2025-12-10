@@ -54,6 +54,7 @@ export default async function ListaPage({
                                 <td className="p-4 font-bold text-white">{guest.name}</td>
                                 <td className="p-4 text-right text-xs text-gray-500">
                                     {new Date(guest.created_at).toLocaleString('es-AR', {
+                                        timeZone: 'America/Argentina/Buenos_Aires',
                                         day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
                                     })}
                                 </td>
