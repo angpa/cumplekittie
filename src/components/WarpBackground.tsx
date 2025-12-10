@@ -11,7 +11,7 @@ import { BlendFunction } from "postprocessing";
 // ==========================================
 function WarpStars() {
     const ref = useRef<THREE.Points>(null);
-    const starCount = 6000;
+    const starCount = 2000; // REDUCIDO DE 6000 PARA MOBILE
 
     // Generamos posiciones una vez
     const { positions, geometry } = useMemo(() => {
@@ -69,7 +69,7 @@ function WarpStars() {
 // 2. WARP REACTIVO (PARTÍCULAS GRANDES)
 // ==========================================
 function ReactiveWarp() {
-    const count = 1500; // Reducido para no saturar junto con las estrellas
+    const count = 600; // REDUCIDO DE 1500 PARA MOBILE
     const mesh = useRef<THREE.InstancedMesh>(null);
 
     const dummy = useMemo(() => new THREE.Object3D(), []);

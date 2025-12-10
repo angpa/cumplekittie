@@ -97,7 +97,7 @@ export default function InvitacionAnabellaPablo() {
 
             {/* CANVAS 3D FONDO */}
             <div className="absolute inset-0 z-0 text-white">
-                <Canvas camera={{ position: [0, 0, 50], fov: 75 }} style={{ width: '100%', height: '100%' }}>
+                <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 50], fov: 75 }} style={{ width: '100%', height: '100%' }}>
                     <WarpBackground />
                 </Canvas>
             </div>
