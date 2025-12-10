@@ -157,7 +157,7 @@ export default function InvitacionAnabellaPablo() {
                         Fiesta My Darling Kittie
                     </h1>
                     <p className="text-sm md:text-base text-slate-400 mb-10 tracking-widest">
-                        Cumpleaños de Kittie y Versión 1.0 del Depto  Hogar de Anabella & Pablo
+                        Cumpleaños de Kittie y Versión 1.0 deL Hogar de Anabella & Pablo
                     </p>
                     <button
                         onClick={activarMusica}
@@ -192,7 +192,7 @@ export default function InvitacionAnabellaPablo() {
                         </h2>
 
                         <p className="text-sm md:text-base uppercase tracking-[0.25em] text-cyan-200/80 mb-8 border-b border-white/10 pb-8">
-                            CUMPLEAÑOS + INAUGURACIÓN DEL HOGAR v1.0
+                            CUMPLEAÑOS + INAUGURACIÓN DEL HOGAR DE ANABELLA & PABLO v1.0
                         </p>
 
                         <div className="space-y-6 text-slate-200 font-light leading-relaxed text-lg text-center md:text-left">
