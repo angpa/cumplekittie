@@ -1,65 +1,141 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+import { useState, useRef } from "react";
+
+export default function InvitacionAnabellaPablo() {
+    const [entrar, setEntrar] = useState(false);
+    const audioRef = useRef<HTMLAudioElement>(null);
+
+    const activarMusica = () => {
+        setEntrar(true);
+        if (audioRef.current) {
+            audioRef.current.muted = false;
+            audioRef.current.play().catch(e => console.log("Audio play failed:", e));
+        }
+    };
+
+    return (
+        <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-black via-slate-950 to-[#14001F] text-white font-sans">
+            {/* CAPA ESTRELLAS TIPO LUMA */}
+            <div
+                className="pointer-events-none absolute inset-0 bg-stars mix-blend-screen"
+                aria-hidden="true"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+            {/* GLOWS NEÓN */}
+            <div
+                className="pointer-events-none absolute -top-40 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(244,114,182,0.45),transparent_60%)] blur-3xl"
+                aria-hidden="true"
+            />
+            <div
+                className="pointer-events-none absolute bottom-[-10rem] left-[-5rem] h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.4),transparent_60%)] blur-3xl"
+                aria-hidden="true"
+            />
+            <div
+                className="pointer-events-none absolute bottom-[-8rem] right-[-4rem] h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(94,234,212,0.4),transparent_60%)] blur-3xl"
+                aria-hidden="true"
+            />
+
+            {/* AUDIO */}
+            <audio
+                ref={audioRef}
+                src="/audio/ButNotTonight.mp3"
+                autoPlay
+                loop
+                muted
+                playsInline
+            />
+
+            {/* OVERLAY DE ENTRADA */}
+            {!entrar && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm text-center px-6 z-50">
+                    <div className="mb-6 text-xs uppercase tracking-[0.35em] text-fuchsia-300">
+                        Home Update · Synthwave Night
+                    </div>
+                    <h1 className="text-3xl md:text-4xl font-light tracking-[0.25em] mb-4">
+                        Fiesta de Anabella
+                    </h1>
+                    <p className="text-sm md:text-base opacity-80 mb-8">
+                        Tocá para entrar a la invitación <br /> con música y neón 80s.
+                    </p>
+                    <button
+                        onClick={activarMusica}
+                        className="px-8 py-3 rounded-full border border-fuchsia-400 bg-fuchsia-500/10 text-sm md:text-base font-semibold tracking-wide shadow-[0_0_25px_rgba(244,114,182,0.9)] hover:bg-fuchsia-500/20 hover:shadow-[0_0_40px_rgba(244,114,182,1)] transition cursor-pointer"
+                    >
+                        Entrar con música
+                    </button>
+                </div>
+            )}
+
+            {/* CONTENIDO PRINCIPAL */}
+            <div
+                className={`relative flex items-center justify-center min-h-screen transition-opacity duration-700 ${entrar ? "opacity-100" : "opacity-0"
+                    }`}
+            >
+                <div className="relative max-w-xl mx-auto px-6 py-16 md:py-24">
+                    {/* CARD PRINCIPAL */}
+                    <div className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl px-6 py-10 md:px-10 md:py-12 shadow-[0_0_40px_rgba(15,23,42,0.9)]">
+                        {/* BARRITA TOP */}
+                        <div className="flex items-center gap-2 mb-6 text-[10px] uppercase tracking-[0.3em] text-sky-200/80">
+                            <span className="h-[6px] w-[6px] rounded-full bg-fuchsia-400 shadow-[0_0_12px_rgba(244,114,182,1)]" />
+                            <span className="h-[6px] w-[6px] rounded-full bg-sky-400/80" />
+                            <span className="h-[6px] w-[6px] rounded-full bg-emerald-300/80" />
+                            <span className="ml-2">Fiesta de Anabella 100% · Acceso concedido</span>
+                        </div>
+
+                        <h2 className="text-xl md:text-2xl font-light tracking-[0.22em] mb-4 text-fuchsia-100">
+                            … Fiesta de Anabella 100%
+                        </h2>
+
+                        <p className="text-xs md:text-sm uppercase tracking-[0.25em] text-slate-300/80">
+                            Versión 1.0 del Depto · Hogar Anabella &amp; Pablo
+                        </p>
+
+                        <p className="mt-6 text-sm md:text-base leading-relaxed opacity-95">
+                            <span className="block text-sm md:text-base font-semibold mb-2 text-sky-100">
+                                Bienvenidx a la web donde empieza la fiesta.
+                            </span>
+                            Neón, retro 80s, Depeche Mode flotando en el aire
+                            <br />
+                            y un pequeño universo de estrellas digitales
+                            que ahora custodian nuestro nuevo hogar.
+                            <br />
+                            Scrolleá, bailá, vení. Este update lo instalamos juntxs.
+                        </p>
+
+                        <div className="mt-8 grid gap-2 text-sm md:text-base opacity-95 text-left">
+                            <p>✨ Habrá comida vegana</p>
+                            <p>🍾 Podés traer lo que quieras tomar</p>
+                            <p>💿 Synth / 80s / Depeche Mode / And One vibes</p>
+                            <p>🐱 Gatitos y guiños cartoon en modo retro-cute</p>
+                        </div>
+
+                        <div className="mt-8 grid gap-2 text-sm md:text-base text-left">
+                            <p>
+                                📍{" "}
+                                <span className="font-semibold">
+                                    Avenida Santa Fe 2982 – Piso 5, Depto I
+                                </span>
+                            </p>
+                            <p>
+                                📅 <span className="font-semibold">20 de diciembre</span>
+                            </p>
+                            <p>
+                                ⏰ <span className="font-semibold">10:30 PM</span>
+                            </p>
+                        </div>
+
+                        <div className="mt-10 flex flex-col items-center gap-3">
+                            <button className="px-8 py-3 rounded-full border border-sky-400/80 bg-sky-500/10 text-sm md:text-base font-semibold tracking-wide shadow-[0_0_22px_rgba(56,189,248,0.9)] hover:bg-sky-500/20 hover:shadow-[0_0_38px_rgba(56,189,248,1)] transition cursor-pointer">
+                                Asistir
+                            </button>
+                            <p className="text-xs md:text-[11px] uppercase tracking-[0.25em] text-slate-400/90">
+                                Hacé clic en “Asistir” y confirmá tu presencia
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </main>
-    </div>
-  );
+    );
 }
