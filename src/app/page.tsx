@@ -20,6 +20,9 @@ export default function InvitacionAnabellaPablo() {
 
     // SYNC AUDIO DATA TO WINDOW FOR THREEJS & DOM
     useEffect(() => {
+        // FORCE SCROLL TO TOP ON LOAD
+        window.scrollTo(0, 0);
+
         (window as any).__onMusicFrame = (data: { low: number, mid: number, high: number, total: number }) => {
             // Guardar para Three.js
             (window as any).__musicData = data;
@@ -47,6 +50,9 @@ export default function InvitacionAnabellaPablo() {
 
     const activarMusica = () => {
         setEntrar(true);
+        // FORCE SCROLL TOP WHEN ENTERING
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
         if (audioRef.current) {
             audioRef.current.muted = false;
             audioRef.current.play().then(() => {
@@ -87,11 +93,11 @@ export default function InvitacionAnabellaPablo() {
     };
 
     return (
-        <div className="relative min-h-screen overflow-hidden bg-black text-white font-sans selection:bg-fuchsia-500 selection:text-white">
+        <div className="relative min-h-[100dvh] overflow-hidden bg-black text-white font-sans selection:bg-fuchsia-500 selection:text-white">
 
             {/* CANVAS 3D FONDO */}
-            <div className="absolute inset-0 z-0">
-                <Canvas camera={{ position: [0, 0, 50], fov: 75 }}>
+            <div className="absolute inset-0 z-0 text-white">
+                <Canvas camera={{ position: [0, 0, 50], fov: 75 }} style={{ width: '100%', height: '100%' }}>
                     <WarpBackground />
                 </Canvas>
             </div>
@@ -114,7 +120,7 @@ export default function InvitacionAnabellaPablo() {
 
             {/* OVERLAY DE ENTRADA */}
             {!entrar && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md text-center px-6 z-50">
+                <div className="absolute inset-0 z-50 min-h-[100dvh] flex flex-col items-center justify-center bg-black/80 backdrop-blur-md text-center px-6">
                     <div className="mb-6 text-xs uppercase tracking-[0.35em] text-fuchsia-400 animate-pulse">
                         Fiesta de Anabella 100% · Acceso concedido
                     </div>
@@ -136,7 +142,7 @@ export default function InvitacionAnabellaPablo() {
 
             {/* CONTENIDO PRINCIPAL */}
             <div
-                className={`relative z-10 flex items-center justify-center min-h-screen transition-opacity duration-[1500ms] ease-in-out ${entrar ? "opacity-100" : "opacity-0"
+                className={`relative z-10 min-h-[100dvh] flex items-center justify-center transition-opacity duration-[1500ms] ease-in-out ${entrar ? "opacity-100" : "opacity-0"
                     } `}
             >
                 <div className="relative max-w-2xl mx-auto px-6 py-20 pb-40">
