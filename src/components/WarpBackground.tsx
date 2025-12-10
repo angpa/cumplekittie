@@ -11,8 +11,8 @@ import { EffectComposer, Bloom, ChromaticAberration } from "@react-three/postpro
 function WarpStars({ isMobile }: { isMobile: boolean }) {
     const ref = useRef<THREE.Points>(null);
 
-    // DYNAMIC COUNT: 1200 for mobile (performant), 6000 for desktop (premium)
-    const starCount = isMobile ? 1200 : 6000;
+    // DYNAMIC COUNT: 400 for mobile (Hypersonic/Clean), 6000 for desktop (Dense/Atmospheric)
+    const starCount = isMobile ? 400 : 6000;
 
     const { positions, geometry } = useMemo(() => {
         const pos = new Float32Array(starCount * 3);
@@ -33,8 +33,8 @@ function WarpStars({ isMobile }: { isMobile: boolean }) {
 
         const posArray = ref.current.geometry.attributes.position.array as Float32Array;
 
-        // SPEED ADJUSTMENT: Slower on mobile to reduce visual chaos/processing
-        const speed = isMobile ? 0.05 : 0.2;
+        // SPEED ADJUSTMENT: Hypersonic on Mobile! (0.4 vs 0.2)
+        const speed = isMobile ? 0.4 : 0.2;
 
         for (let i = 0; i < starCount * 3; i += 3) {
             posArray[i + 2] += speed;
@@ -53,7 +53,7 @@ function WarpStars({ isMobile }: { isMobile: boolean }) {
         <points ref={ref} geometry={geometry}>
             <pointsMaterial
                 color="white"
-                size={isMobile ? 0.09 : 0.06} // Slightly larger on mobile for visibility with lower count
+                size={isMobile ? 0.25 : 0.06} // VERY LARGE on mobile for impact
                 transparent
                 opacity={0.9}
                 blending={THREE.AdditiveBlending}
