@@ -182,7 +182,7 @@ export default function InvitacionAnabellaPablo() {
                         </h2>
 
                         <p className="text-sm md:text-base uppercase tracking-[0.25em] text-cyan-200/80 mb-8 border-b border-white/10 pb-8">
-                            Retro 80s/90s, Depeche Mode flotando en el aire
+                            Retro 70s/80s/90s, Depeche Mode flotando en el aire
                         </p>
 
                         <div className="space-y-6 text-slate-200 font-light leading-relaxed text-lg text-center md:text-left">
@@ -220,7 +220,7 @@ export default function InvitacionAnabellaPablo() {
                             </div>
                             <div className="flex items-start gap-3">
                                 <span className="text-xl">🪢</span>
-                                <p>Habrá cuerdas Shibari disponibles para nudos estéticos ( espacio cuidado )</p>
+                                <p>Habrá cuerdas Shibari disponibles para nudos estéticos (espacio cuidado)</p>
                             </div>
                         </div>
 
