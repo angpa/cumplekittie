@@ -122,13 +122,13 @@ export default function InvitacionAnabellaPablo() {
             {!entrar && (
                 <div className="absolute inset-0 z-50 min-h-[100dvh] flex flex-col items-center justify-center bg-black/80 backdrop-blur-md text-center px-6">
                     <div className="mb-6 text-xs uppercase tracking-[0.35em] text-fuchsia-400 animate-pulse">
-                        Fiesta de Anabella 100% · Acceso concedido
+                        Fiesta My Darling Kittie 100% · Acceso concedido
                     </div>
                     <h1 className="text-4xl md:text-6xl font-extralight tracking-[0.1em] mb-6 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-200 via-white to-cyan-200">
                         Fiesta de Anabella
                     </h1>
                     <p className="text-sm md:text-base text-slate-400 mb-10 tracking-widest">
-                        Versión 1.0 del Depto · Hogar Anabella &amp; Pablo
+                        Cumpleaños de Kittie y Versión 1.0 del Depto  Hogar de Anabella & Pablo
                     </p>
                     <button
                         onClick={activarMusica}
@@ -159,7 +159,7 @@ export default function InvitacionAnabellaPablo() {
                         </div>
 
                         <h2 className="text-3xl md:text-5xl font-thin tracking-wider mb-6 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
-                            Fiesta de Anabella
+                            Fiesta My Darling Kittie
                         </h2>
 
                         <p className="text-sm md:text-base uppercase tracking-[0.25em] text-cyan-200/80 mb-8 border-b border-white/10 pb-8">
@@ -169,7 +169,7 @@ export default function InvitacionAnabellaPablo() {
                         <div className="space-y-6 text-slate-200 font-light leading-relaxed text-lg text-center md:text-left">
                             <p>
                                 <span className="text-fuchsia-300">Bienvenidx a la web donde empieza la fiesta.</span><br />
-                                Un pequeño universo digital que ahora custodia nuestro nuevo hogar.
+                                Retro 70s/80s/90s y Depeche Mode flotando en el aire con buena vibra y 5 michis.
                             </p>
                             <p>
                                 Scrolleá, bailá, vení. <br />
@@ -189,7 +189,7 @@ export default function InvitacionAnabellaPablo() {
                             </div>
                             <div className="flex items-start gap-3">
                                 <span className="text-xl">💿</span>
-                                <p>Música 80s / 90s / Depeche Mode / And One vibes</p>
+                                <p>Música 70s/ 80s / 90s / Depeche Mode / And One vibes</p>
                             </div>
                             <div className="flex items-start gap-3">
                                 <span className="text-xl">🎥</span>
@@ -201,7 +201,7 @@ export default function InvitacionAnabellaPablo() {
                             </div>
                             <div className="flex items-start gap-3">
                                 <span className="text-xl">🪢</span>
-                                <p>Actividad estética con cuerdas (opcional y cuidado)</p>
+                                <p>Habrá cuerdas Shibari disponibles para nudos estéticos ( espacio cuidado )</p>
                             </div>
                         </div>
 
