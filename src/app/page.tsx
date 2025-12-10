@@ -97,7 +97,12 @@ export default function InvitacionAnabellaPablo() {
 
             {/* CANVAS 3D FONDO */}
             <div className="absolute inset-0 z-0 text-white">
-                <Canvas dpr={1} camera={{ position: [0, 0, 50], fov: 75 }} style={{ width: '100%', height: '100%' }}>
+                <Canvas
+                    dpr={[1, 1.5]} // Balance perfecto: nítido pero no mata la GPU (retina 2x/3x es overkill)
+                    gl={{ antialias: false, powerPreference: "high-performance" }} // AA off gana muchos FPS y el Bloom lo disimula
+                    camera={{ position: [0, 0, 50], fov: 75 }}
+                    style={{ width: '100%', height: '100%' }}
+                >
                     <WarpBackground />
                 </Canvas>
             </div>

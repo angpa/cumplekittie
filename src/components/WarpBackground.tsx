@@ -11,7 +11,7 @@ import { BlendFunction } from "postprocessing";
 // ==========================================
 function WarpStars() {
     const ref = useRef<THREE.Points>(null);
-    const starCount = 800; // SUPER OPTIMIZADO PARA CELULARES VIEJOS
+    const starCount = 1500; // EQUILIBRIO: Ni vacío (800) ni pesado (6000)
 
     // Generamos posiciones una vez
     const { positions, geometry } = useMemo(() => {
@@ -69,7 +69,7 @@ function WarpStars() {
 // 2. WARP REACTIVO (PARTÍCULAS GRANDES)
 // ==========================================
 function ReactiveWarp() {
-    const count = 300; // VERY LOW COUNT FOR FPS
+    const count = 500; // Suficiente para el efecto túnel sin saturar
     const mesh = useRef<THREE.InstancedMesh>(null);
 
     const dummy = useMemo(() => new THREE.Object3D(), []);
@@ -157,9 +157,10 @@ export default function WarpBackground() {
             <WarpStars />
             <ReactiveWarp />
 
-            {/* EFECTOS POSTPROCESSING (LUMA STYLE) */}
+            {/* EFECTOS POSTPROCESSING (LUMA STYLE - RESTORED PREMIUM GLOW) */}
             <EffectComposer>
-                <Bloom luminanceThreshold={0.2} intensity={1.0} radius={0.5} />
+                {/* mipmapBlur es CLAVE para que el glow se vea suave y "caro", no como borde sucio */}
+                <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.2} radius={0.4} />
                 <ChromaticAberration
                     offset={new THREE.Vector2(0.002, 0.002)}
                     radialModulation={false}
