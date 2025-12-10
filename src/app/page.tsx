@@ -5,6 +5,7 @@ import { Canvas } from "@react-three/fiber";
 import WarpBackground from "@/components/WarpBackground";
 import { useMusicReactive } from "@/hooks/useMusicReactive";
 import { useMobile } from "@/hooks/useMobile"; // NEW HOOK
+import { submitRSVP } from "./actions"; // Import Server Action
 
 export default function InvitacionAnabellaPablo() {
     const [entrar, setEntrar] = useState(false);
@@ -63,9 +64,7 @@ export default function InvitacionAnabellaPablo() {
         }
     };
 
-    import { submitRSVP } from "./actions"; // Import Server Action
 
-    // ... inside component ...
 
     const enviarAsistencia = async (e: React.FormEvent) => {
         e.preventDefault();
