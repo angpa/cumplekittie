@@ -142,7 +142,7 @@ export default function InvitacionAnabellaPablo() {
 
             {/* OVERLAY DE ENTRADA */}
             {!entrar && (
-                <div className="fixed inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md text-center px-6 z-50">
+                <div className="absolute inset-0 z-50 min-h-[100dvh] flex flex-col items-center justify-center bg-black/80 backdrop-blur-md text-center px-6">
                     <div className="mb-6 text-xs uppercase tracking-[0.35em] text-fuchsia-400 animate-pulse">
                         Fiesta de Anabella 100% · Acceso concedido
                     </div>
