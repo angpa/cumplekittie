@@ -24,3 +24,23 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.bg-stars {
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255, 255, 255, 0.7) 0, transparent 40%),
+    radial-gradient(1px 1px at 80% 0%, rgba(255, 255, 255, 0.5) 0, transparent 40%),
+    radial-gradient(1px 1px at 0% 50%, rgba(255, 255, 255, 0.45) 0, transparent 40%),
+    radial-gradient(1px 1px at 50% 100%, rgba(255, 255, 255, 0.55) 0, transparent 40%);
+  background-size: cover;
+  opacity: 0.75;
+  animation: starsMove 40s linear infinite;
+}
+
+@keyframes starsMove {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-80px, -80px, 0);
+  }
+}
