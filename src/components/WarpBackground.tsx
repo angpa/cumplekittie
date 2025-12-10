@@ -139,15 +139,14 @@ function ReactiveWarp({ isMobile }: { isMobile: boolean }) {
         // Color Reaction (Highs -> Brightness/Hue shift)
         const material = mesh.current.material as THREE.MeshBasicMaterial;
 
-        // RHTYHM HAPTICS (Mobile Only) - Physical Bass
-        if (isMobile && low > 140) {
-            // Simple throttle using a static variable on the window or local ref if possible, 
-            // but here we rely on the frame loop. To avoid constant buzzing, we raise the threshold slightly.
-            // A better approach is using Date.now()
+        // RHYTHM HAPTICS (Mobile Only) - Physical Bass
+        // Sensibilidad aumentada: > 110 (antes 140)
+        if (isMobile && low > 110) {
             const now = Date.now();
             if (now - (mesh.current.userData.lastVibrate || 0) > 150) {
                 if (typeof navigator !== 'undefined' && navigator.vibrate) {
-                    navigator.vibrate(30); // Short sharp kick
+                    // try-catch por si el navegador bloquea
+                    try { navigator.vibrate(50); } catch (e) { }
                 }
                 mesh.current.userData.lastVibrate = now;
             }
