@@ -231,8 +231,15 @@ export default function InvitacionAnabellaPablo() {
                                 <p className="text-sm uppercase tracking-widest text-slate-400">10:30 PM</p>
                             </div>
                             <div className="text-right">
-                                <p className="text-sm text-cyan-300">Avenida Santa Fe 2982</p>
-                                <p className="text-xs text-slate-500">Piso 5, Depto I</p>
+                                <a
+                                    href="https://maps.app.goo.gl/oVCjMs8xKNxmVFd58"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group hover:opacity-80 transition-opacity"
+                                >
+                                    <p className="text-sm text-cyan-300 group-hover:underline decoration-cyan-300/50 underline-offset-4">Avenida Santa Fe 2982 ↗</p>
+                                    <p className="text-xs text-slate-500">Piso 5, Depto I</p>
+                                </a>
                             </div>
                         </div>
 
