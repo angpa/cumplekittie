@@ -139,19 +139,16 @@ function ReactiveWarp({ isMobile }: { isMobile: boolean }) {
         // Color Reaction (Highs -> Brightness/Hue shift)
         const material = mesh.current.material as THREE.MeshBasicMaterial;
 
-        // RHYTHM FLASH (Subtle brightness boost, no pure white)
-        // if (low > 130 || mid > 140) { material.opacity = 1; } // Optional: Pulse opacity only
-
-        const hue = 0.75 + (high * 0.0002);
-        // Limit max lightness to 0.75 to avoid washing out to white
-        const light = 0.4 + (high * 0.001);
-
-        // Boost opacity on beat, but keep color
-        let op = 0.6 + (total * 0.001);
-        if (low > 130) op = 1.0;
-
-        material.color.setHSL(hue % 1, 1, Math.min(0.75, light));
-        material.opacity = op;
+        // RHYTHM FLASH (White on strong Kick/Snare)
+        if (low > 130 || mid > 140) {
+            material.color.setStyle("#FFFFFF"); // Flash White
+            material.opacity = 1;
+        } else {
+            const hue = 0.75 + (high * 0.0002);
+            const light = 0.5 + (high * 0.001);
+            material.color.setHSL(hue % 1, 1, Math.min(0.8, light));
+            material.opacity = 0.6 + (total * 0.001); // Breathing opacity
+        }
     });
 
     return (
