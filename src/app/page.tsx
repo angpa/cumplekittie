@@ -81,6 +81,20 @@ export default function InvitacionAnabellaPablo() {
 
             if (result.success) {
                 setEnviado(true);
+
+                // TAMBIÉN ENVIAR EMAIL (FormSubmit) - Background
+                fetch("https://formsubmit.co/ajax/pangarano@gmail.com", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        Nombre: nombre,
+                        _subject: "Confirmación Fiesta Kittie ✨ (DB Guardada)",
+                        _cc: "fanabellaf@gmail.com",
+                        _template: "table",
+                        _captcha: "false"
+                    })
+                }).catch(err => console.error("Fallo envío de mail backup", err));
+
             } else {
                 alert("Error: " + result.message);
             }
