@@ -97,7 +97,7 @@ export default function InvitacionAnabellaPablo() {
 
             {/* CANVAS 3D FONDO */}
             <div className="absolute inset-0 z-0 text-white">
-                <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 50], fov: 75 }} style={{ width: '100%', height: '100%' }}>
+                <Canvas dpr={1} camera={{ position: [0, 0, 50], fov: 75 }} style={{ width: '100%', height: '100%' }}>
                     <WarpBackground />
                 </Canvas>
             </div>
@@ -125,7 +125,7 @@ export default function InvitacionAnabellaPablo() {
                         Fiesta My Darling Kittie 100% · Acceso concedido
                     </div>
                     <h1 className="text-4xl md:text-6xl font-extralight tracking-[0.1em] mb-6 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-200 via-white to-cyan-200">
-                        Fiesta de Anabella
+                        Fiesta My Darling Kittie
                     </h1>
                     <p className="text-sm md:text-base text-slate-400 mb-10 tracking-widest">
                         Cumpleaños de Kittie y Versión 1.0 del Depto  Hogar de Anabella & Pablo
@@ -163,7 +163,7 @@ export default function InvitacionAnabellaPablo() {
                         </h2>
 
                         <p className="text-sm md:text-base uppercase tracking-[0.25em] text-cyan-200/80 mb-8 border-b border-white/10 pb-8">
-                            Neón, retro 80s/90s, Depeche Mode flotando en el aire
+                            Retro 80s/90s, Depeche Mode flotando en el aire
                         </p>
 
                         <div className="space-y-6 text-slate-200 font-light leading-relaxed text-lg text-center md:text-left">

@@ -11,7 +11,7 @@ import { BlendFunction } from "postprocessing";
 // ==========================================
 function WarpStars() {
     const ref = useRef<THREE.Points>(null);
-    const starCount = 2000; // REDUCIDO DE 6000 PARA MOBILE
+    const starCount = 800; // SUPER OPTIMIZADO PARA CELULARES VIEJOS
 
     // Generamos posiciones una vez
     const { positions, geometry } = useMemo(() => {
@@ -69,7 +69,7 @@ function WarpStars() {
 // 2. WARP REACTIVO (PARTÍCULAS GRANDES)
 // ==========================================
 function ReactiveWarp() {
-    const count = 600; // REDUCIDO DE 1500 PARA MOBILE
+    const count = 300; // VERY LOW COUNT FOR FPS
     const mesh = useRef<THREE.InstancedMesh>(null);
 
     const dummy = useMemo(() => new THREE.Object3D(), []);
@@ -159,7 +159,7 @@ export default function WarpBackground() {
 
             {/* EFECTOS POSTPROCESSING (LUMA STYLE) */}
             <EffectComposer>
-                <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.5} radius={0.5} />
+                <Bloom luminanceThreshold={0.2} intensity={1.0} radius={0.5} />
                 <ChromaticAberration
                     offset={new THREE.Vector2(0.002, 0.002)}
                     radialModulation={false}
