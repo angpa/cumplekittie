@@ -158,13 +158,10 @@ export default function WarpBackground() {
             <ReactiveWarp />
 
             {/* EFECTOS POSTPROCESSING (LUMA STYLE) */}
-            <EffectComposer disableNormalPass>
-                {/* Glow suave */}
+            <EffectComposer>
                 <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.5} radius={0.5} />
-
-                {/* Aberración cromática (Rainbow edges) */}
                 <ChromaticAberration
-                    offset={new THREE.Vector2(0.002, 0.002)} // Desplazamiento RGB sutil
+                    offset={new THREE.Vector2(0.002, 0.002)}
                     radialModulation={false}
                     modulationOffset={0}
                 />
