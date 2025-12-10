@@ -192,7 +192,7 @@ export default function InvitacionAnabellaPablo() {
                         </h2>
 
                         <p className="text-sm md:text-base uppercase tracking-[0.25em] text-cyan-200/80 mb-8 border-b border-white/10 pb-8">
-                            Retro 70s/80s/90s, Depeche Mode flotando en el aire
+                            CUMPLEAÑOS + INAUGURACIÓN DEL HOGAR v1.0
                         </p>
 
                         <div className="space-y-6 text-slate-200 font-light leading-relaxed text-lg text-center md:text-left">
