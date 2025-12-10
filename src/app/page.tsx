@@ -130,9 +130,9 @@ export default function InvitacionAnabellaPablo() {
 
             {/* OVERLAY DE ENTRADA */}
             {!entrar && (
-                <div className="absolute inset-0 z-50 min-h-[100dvh] flex flex-col items-center justify-center bg-black/80 backdrop-blur-md text-center px-6">
+                <div className="fixed inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md text-center px-6 z-50">
                     <div className="mb-6 text-xs uppercase tracking-[0.35em] text-fuchsia-400 animate-pulse">
-                        Fiesta My Darling Kittie 100% · Acceso concedido
+                        Fiesta de Anabella 100% · Acceso concedido
                     </div>
                     <h1 className="text-4xl md:text-6xl font-extralight tracking-[0.1em] mb-6 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-200 via-white to-cyan-200">
                         Fiesta My Darling Kittie
