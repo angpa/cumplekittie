@@ -20,6 +20,7 @@ export default function InvitacionAnabellaPablo() {
 
     // GLOW REF FOR AUDIO REACTION
     const glowRef = useRef<HTMLDivElement>(null);
+    const cardRef = useRef<HTMLDivElement>(null);
 
     // SYNC AUDIO DATA TO WINDOW FOR THREEJS & DOM
     useEffect(() => {
@@ -46,6 +47,15 @@ export default function InvitacionAnabellaPablo() {
                     glowRef.current.style.boxShadow = `0 0 50px rgba(247, 37, 133, ${data.total / 300})`;
                 } else {
                     glowRef.current.style.boxShadow = "none";
+                }
+            }
+
+            // HEARTBEAT PULSE (Card Zoom on Kick)
+            if (cardRef.current) {
+                if (data.low > 130) {
+                    cardRef.current.style.transform = "scale(1.02)";
+                } else {
+                    cardRef.current.style.transform = "scale(1)";
                 }
             }
         };
@@ -169,7 +179,7 @@ export default function InvitacionAnabellaPablo() {
             >
                 <div className="relative max-w-2xl mx-auto px-6 py-20 pb-40">
                     {/* CARD PRINCIPAL FROSTED */}
-                    <div className="relative rounded-[2rem] border border-white/5 bg-black/40 backdrop-blur-xl px-8 py-12 md:px-12 md:py-16 shadow-[0_0_60px_rgba(0,0,0,0.8)]">
+                    <div ref={cardRef} className="relative rounded-[2rem] border border-white/5 bg-black/40 backdrop-blur-xl px-8 py-12 md:px-12 md:py-16 shadow-[0_0_60px_rgba(0,0,0,0.8)] transition-transform duration-75 ease-out will-change-transform">
 
                         {/* DECORACIÓN SUPERIOR */}
                         <div className="flex justify-between items-center mb-8 opacity-60">

@@ -139,19 +139,6 @@ function ReactiveWarp({ isMobile }: { isMobile: boolean }) {
         // Color Reaction (Highs -> Brightness/Hue shift)
         const material = mesh.current.material as THREE.MeshBasicMaterial;
 
-        // RHYTHM HAPTICS (Mobile Only) - Physical Bass
-        // Sensibilidad aumentada: > 110 (antes 140)
-        if (isMobile && low > 110) {
-            const now = Date.now();
-            if (now - (mesh.current.userData.lastVibrate || 0) > 150) {
-                if (typeof navigator !== 'undefined' && navigator.vibrate) {
-                    // try-catch por si el navegador bloquea
-                    try { navigator.vibrate(50); } catch (e) { }
-                }
-                mesh.current.userData.lastVibrate = now;
-            }
-        }
-
         // RHYTHM FLASH (White on strong Kick/Snare)
         if (low > 130 || mid > 140) {
             material.color.setStyle("#FFFFFF"); // Flash White
