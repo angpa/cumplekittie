@@ -220,7 +220,7 @@ export default function InvitacionAnabellaPablo() {
                             </div>
                             <div className="flex items-start gap-3">
                                 <span className="text-xl">🪢</span>
-                                <p>Habrá cuerdas Shibari disponibles para nudos estéticos (espacio cuidado)</p>
+                                <p>Habrá cuerdas de Shibari disponibles para nudos estéticos (espacio cuidado)</p>
                             </div>
                         </div>
 
