@@ -142,7 +142,7 @@ export default function InvitacionAnabellaPablo() {
 
             {/* OVERLAY DE ENTRADA */}
             {!entrar && (
-                <div className="absolute inset-0 z-50 min-h-[100dvh] flex flex-col items-center justify-center bg-black/80 backdrop-blur-md text-center px-6">
+                <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md text-center px-6">
                     <div className="mb-6 text-xs uppercase tracking-[0.35em] text-fuchsia-400 animate-pulse">
                         Fiesta de Anabella 100% · Acceso concedido
                     </div>
@@ -191,7 +191,7 @@ export default function InvitacionAnabellaPablo() {
                         <div className="space-y-6 text-slate-200 font-light leading-relaxed text-lg text-center md:text-left">
                             <p>
                                 <span className="text-fuchsia-300">Bienvenidx a la web donde empieza la fiesta.</span><br />
-                                Retro 70s/80s/90s y Depeche Mode flotando en el aire con buena vibra y 5 michis.
+                                Retro 70s/80s/90s y Depeche Mode flotando en el aire con buena vibra y 5 michis (🐈, 🐈‍⬛, 🐱, 🐈‍⬛, 😺).
                             </p>
                             <p>
                                 Scrolleá, bailá, vení. <br />
