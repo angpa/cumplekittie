@@ -10,9 +10,11 @@ export async function submitRSVP(formData: FormData) {
     return { success: false, message: 'El nombre es obligatorio' };
   }
 
-  // DIAGNÓSTICO: Verificar si Vercel inyectó las variables
-  if (!process.env.POSTGRES_URL) {
-    console.error("CRITICAL: POSTGRES_URL is missing. Database not connected.");
+  // DIAGNÓSTICO: Verificar variables de entorno (Soporte para POSTGRES_URL o DATABASE_URL)
+  const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+
+  if (!dbUrl) {
+    console.error("CRITICAL: DB URL is missing (Checked POSTGRES_URL and DATABASE_URL).");
     return {
       success: false,
       message: 'Error de Configuración: Falta conectar la base de datos en Vercel (Storage -> Connect).'
