@@ -139,6 +139,20 @@ function ReactiveWarp({ isMobile }: { isMobile: boolean }) {
         // Color Reaction (Highs -> Brightness/Hue shift)
         const material = mesh.current.material as THREE.MeshBasicMaterial;
 
+        // RHTYHM HAPTICS (Mobile Only) - Physical Bass
+        if (isMobile && low > 140) {
+            // Simple throttle using a static variable on the window or local ref if possible, 
+            // but here we rely on the frame loop. To avoid constant buzzing, we raise the threshold slightly.
+            // A better approach is using Date.now()
+            const now = Date.now();
+            if (now - (mesh.current.userData.lastVibrate || 0) > 150) {
+                if (typeof navigator !== 'undefined' && navigator.vibrate) {
+                    navigator.vibrate(30); // Short sharp kick
+                }
+                mesh.current.userData.lastVibrate = now;
+            }
+        }
+
         // RHYTHM FLASH (White on strong Kick/Snare)
         if (low > 130 || mid > 140) {
             material.color.setStyle("#FFFFFF"); // Flash White
